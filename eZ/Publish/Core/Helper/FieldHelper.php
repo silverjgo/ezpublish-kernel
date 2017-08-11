@@ -12,6 +12,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\FieldTypeService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 
 class FieldHelper
 {
@@ -50,6 +51,9 @@ class FieldHelper
     {
         $field = $this->translationHelper->getTranslatedField($content, $fieldDefIdentifier, $forcedLanguage);
         $fieldDefinition = $this->getFieldDefinition($content->contentInfo, $fieldDefIdentifier);
+        if (!$fieldDefinition instanceof FieldDefinition) {
+            return true;
+        }
 
         return $this
             ->fieldTypeService
